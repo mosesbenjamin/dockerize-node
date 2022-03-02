@@ -1,0 +1,64 @@
+FROM
+# Select base image
+FROM node:15.14.0
+# Optionally: name stage
+# FROM node AS builder
+
+LABEL
+# Helpful metadata
+# Key-value pairs(key=value)- description, application
+# LABEL version="1.0"
+# LABEL maintainer="Benjamin"
+
+COPY
+# COPY package.json package-lock.json /app/
+
+RUN
+# Copy files from the build context into the container filesystem
+#  - COPY package.json /app/
+# Supports wildcards using Go filepath.Match rules
+#  - COPY *.js /app/
+# By default uses root UID/GID(0)
+#  - Possible to override
+#  - COPY --chown user:group src dest
+# Invalidates cache for all the subsequent layers
+# You cannot copy from outside the context
+#  - COPY ../outside /somewhere
+# If source is a directory, the entire contents including the metadata
+# is copied
+# If source is a directory, only its contents are copied
+# If destination ends with slash it is considered a directory
+# and a source is copied into it
+# Otherwise, destination is treated as the resulting file name
+# If destination doesn't exist, it's created along with all the
+# directories in its path
+COPY . /app/
+
+ADD
+# Similar to COPY
+# If source is a URL, it is downloaded as a file into the container
+# If source is a local tar archive, it is unpacked into the container
+# (gzip, bzip2, or xz supported)
+# If source is a URL pointing to a tar archive, it will not be unpacked
+
+## Prefer COPY to avoid surprises
+
+RUN
+# Executes command inside container and saves
+# the result
+# Shell form: 
+# - RUN npm install
+# - execute a shell command(default: /bin/sh -c)
+# - Will fail if shell is not present(e.g FROM scratch)
+#    - Exec form: RUN ["/usr/bin/npm", "install"]
+#    - Execute a binary and pass the parameters
+#    - Does not require shell
+
+USER
+# Switch to a different user
+# All the subsequent instructions are executed as the selected user
+# The container based on the image will run as the selected user
+# Default user is root
+# The user needs to exist in the container (/etc/passwd)
+# You can use adduser or useradd to create new users
+# Make sure the user has the rights to the application
