@@ -41,6 +41,22 @@ ARG
 # Impacts the cache when --build-arg changes
 
 
+CMD
+# Default command to execute when creating a container
+# Its is not executed during build time
+# Both shell and exec form available(same as RUN):
+#  - CMD npm start -> shell form
+#  - CMD ["/usr/bin/npm", "start"] -> exec from (preferred)
+
+ENTRYPOINT
+# Command that runs before CMD when a container is created
+# Always executed unless --entrypoint is used
+# docker run --entrypoint '/bin/sh -c' alpine
+# Both shell and exec form available(same as RUN)
+#  - ENTRYPOINT cmd
+#  - ENTRYPOINT ["/bin/this", "param"]
+# CMD is passed as default arguments for ENTRYPOINT
+
 
 ###
 docker build . -t argenv
