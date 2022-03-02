@@ -1,0 +1,50 @@
+Delete after completion
+# --rm
+
+Attach an interactive terminal
+# -ti
+
+Set the name of the container
+# --name
+
+Forward ports to the host machine
+# -p/--port
+
+Configure networking
+# --network
+
+Override Dockerfile defaults
+# CMD
+#  - docker run node bash
+# ENTRYPOINT (--entrypoint)
+# EXPOSE (--expose)
+# ENV (-e)
+# USER (-u, --user)
+# WORKDIR (-w, --workdir)
+
+ENV
+# Key-value pairs(key=value)
+#  - value is optional
+#  Example: - ENV PATH=/opt/app/bin
+# Sets the environment variable for all the subsequent layers
+# and the containers based on the image
+# You can override the values dueing runtime:
+#  - docker run -e PATH=/bin app
+# If you don't want the values in the final image, use ARG
+
+ARG
+# Key-value pairs(key=value)
+#  - value is optional
+# Used to pass build-time variables
+#  - docker build --build-arg version=1.4.2
+# The variable will not end up in the final container
+# Impacts the cache when --build-arg changes
+
+
+
+###
+docker build . -t argenv
+docker run --rm argenv
+
+docker build . -t argenv:14.0.0 --build-arg RT_VERSION=14.0.0
+docker run --rm argenv:14.0.0
